@@ -1,5 +1,5 @@
 SELECT * FROM Book;
-SELECT * FROM Customer WHERE email = 'jane.doe@example.com';
+SELECT * FROM Customer WHERE email = 'cbickerdickeq@apple.com';
 
 SELECT Order.order_id, Customer.first_name, Customer.last_name, Book.title, OrderItem.quantity
 FROM Order

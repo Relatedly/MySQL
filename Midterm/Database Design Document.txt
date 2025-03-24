@@ -18,7 +18,7 @@ Relationships:
 [Table Name], [Attributes], [Data Types], [Constraints]
 
 [Book],  [book_id, title, genre, publication_year, price],	[INT, VARCHAR, VARCHAR, INT, DECIMAL],	 [PRIMARY KEY(book_id), UNIQUE(title)]
-[Author],  [author_id, first_name, last_name, dateofbirth, nationality],	[INT, VARCHAR, VARCHAR, DATE, VARCHAR],	[PRIMARY KEY(author_id)]
+[Author],  [author_id, first_name, last_name, dob, nationality],	[INT, VARCHAR, VARCHAR, DATE, VARCHAR],	[PRIMARY KEY(author_id)]
 [Customer],	[customer_id, first_name, last_name, email, phone, address],	 [INT, VARCHAR, VARCHAR, VARCHAR, VARCHAR, VARCHAR],	 [PRIMARY KEY(customer_id), UNIQUE(email)]
 [Order],  [order_id, customer_id, order_date, status],	[INT, INT, DATE, VARCHAR],	 [PRIMARY KEY(order_id), FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)]
 [Order_Item],	[order_item_id, order_id, book_id, quantity],	[INT, INT, INT, INT],	[PRIMARY KEY(order_item_id), FOREIGN KEY(order_id) REFERENCES Order(order_id), FOREIGN KEY(book_id) REFERENCES Book(book_id)]

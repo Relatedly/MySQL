@@ -26,7 +26,7 @@ CREATE TABLE Customer (
     address VARCHAR(255)
 );
 
-CREATE TABLE Order (
+CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT,
     order_date DATE,
@@ -39,7 +39,7 @@ CREATE TABLE OrderItem (
     order_id INT,
     book_id INT,
     quantity INT NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES Order(order_id),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
     FOREIGN KEY (book_id) REFERENCES Book(book_id)
 );
 
@@ -48,5 +48,5 @@ CREATE TABLE Transaction (
     order_id INT,
     transaction_date DATE,
     total_amount DECIMAL(10, 2),
-    FOREIGN KEY (order_id) REFERENCES Order(order_id)
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id)
 );

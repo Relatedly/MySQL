@@ -4,36 +4,36 @@ Entities:
 -	Book: Stores information about each book in the inventory.
 -	Author: Stores information about authors who have written the books.
 -	Customer: Stores customer details such as name, contact, and address.
--	Order: Tracks individual customer orders.
+-	Orders: Tracks individual customer orders.
 -	Order_Item: Tracks the specific books purchased within an order.
 -	Transaction: Tracks the transaction details for each order.
 
 Relationships: 
 -	A Book can have one or more Authors
 -	A Customer can place multiple Orders
--	An Order can contain multiple Order_Items 
+-	An Orders can contain multiple Order_Items 
 -	An Order_Item links to a Book 
--	An Order is associated with one Transaction 
+-	An Orders is associated with one Transaction 
 
 [Table Name], [Attributes], [Data Types], [Constraints]
 
 [Book],  [book_id, title, genre, publication_year, price],	[INT, VARCHAR, VARCHAR, INT, DECIMAL],	 [PRIMARY KEY(book_id), UNIQUE(title)]
 [Author],  [author_id, first_name, last_name, dob, nationality],	[INT, VARCHAR, VARCHAR, DATE, VARCHAR],	[PRIMARY KEY(author_id)]
 [Customer],	[customer_id, first_name, last_name, email, phone, address],	 [INT, VARCHAR, VARCHAR, VARCHAR, VARCHAR, VARCHAR],	 [PRIMARY KEY(customer_id), UNIQUE(email)]
-[Order],  [order_id, customer_id, order_date, status],	[INT, INT, DATE, VARCHAR],	 [PRIMARY KEY(order_id), FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)]
-[Order_Item],	[order_item_id, order_id, book_id, quantity],	[INT, INT, INT, INT],	[PRIMARY KEY(order_item_id), FOREIGN KEY(order_id) REFERENCES Order(order_id), FOREIGN KEY(book_id) REFERENCES Book(book_id)]
+[Orders],  [order_id, customer_id, order_date, status],	[INT, INT, DATE, VARCHAR],	 [PRIMARY KEY(order_id), FOREIGN KEY(customer_id) REFERENCES Customer(customer_id)]
+[Order_Item],	[order_item_id, order_id, book_id, quantity],	[INT, INT, INT, INT],	[PRIMARY KEY(order_item_id), FOREIGN KEY(order_id) REFERENCES Orders(order_id), FOREIGN KEY(book_id) REFERENCES Book(book_id)]
 [Transaction],	 [transaction_id, order_id, transaction_date, total_amount],	 [INT, INT, DATE, DECIMAL]	[PRIMARY KEY(transaction_id), FOREIGN KEY(order_id) REFERENCES Order(order_id)]
 
 Primary Keys:
 -	Book: book_id
 -	Author: author_id
 -	Customer: customer_id
--	Order: order_id
+-	Orders: order_id
 -	OrderItem: order_item_id
 -	Transaction: transaction_id
 
 Foreign Keys:
--	Order: customer_id references Customer(customer_id)
+-	Orders: customer_id references Customer(customer_id)
 -	Order_Item: order_id references Order(order_id), book_id references Book(book_id)
 -	Transaction: order_id references Order(order_id)
 

@@ -1,0 +1,103 @@
+Movie Streaming Service Database Design
+
+1. Overview
+This document outlines the database design for a movie streaming service.
+
+2. Detailed Entities and Attributes
+
+-- Movies Table
+Purpose: Stores information about the movies available on the streaming platform.
+Attributes:
+
+movie_id (INT, Primary Key) – A unique identifier for each movie.
+title (VARCHAR) – The title of the movie.
+release_year (YEAR) – The year the movie was released.
+genre (VARCHAR) – The genre of the movie (e.g., "Action", "Comedy", "Drama").
+director (VARCHAR) – The director of the movie.
+description (TEXT) – A brief description or synopsis of the movie.
+duration (INT) – The duration of the movie in minutes.
+
+-- Users Table
+Purpose: Stores information about users who subscribe to the service.
+Attributes:
+
+user_id (INT, Primary Key) – A unique identifier for each user.
+first_name (VARCHAR) – The first name of the user.
+last_name (VARCHAR) – The last name of the user.
+email (VARCHAR, UNIQUE) – The user's email address (unique).
+password (VARCHAR) – The user's password (hashed or encrypted).
+subscription_id (INT, Foreign Key) – Links to the Subscriptions table to determine the user's subscription type.
+
+-- Subscriptions Table
+Purpose: Stores information about the different subscription types available to users.
+Attributes:
+
+subscription_id (INT, Primary Key) – A unique identifier for each subscription type.
+subscription_name (VARCHAR) – The name of the subscription (e.g., Free, Basic, Premium).
+price (DECIMAL) – The price of the subscription.
+validity_days (INT) – The number of days the subscription is valid.
+max_devices (INT) – The maximum number of devices allowed for this subscription type.
+
+-- Watch History Table
+Purpose: Tracks the movies watched by each user.
+Attributes:
+
+watch_history_id (INT, Primary Key) – A unique identifier for each watch history entry.
+user_id (INT, Foreign Key) – Links to the Users table to identify the user who watched the movie.
+movie_id (INT, Foreign Key) – Links to the Movies table to identify the movie that was watched.
+watch_date (DATE) – The date the movie was watched.
+duration_watched (INT) – The amount of the movie watched (in minutes).
+
+-- Ratings Table
+Purpose: Stores ratings given by users to movies.
+Attributes:
+
+rating_id (INT, Primary Key) – A unique identifier for each rating.
+user_id (INT, Foreign Key) – Links to the Users table to identify the user who gave the rating.
+movie_id (INT, Foreign Key) – Links to the Movies table to identify the movie that was rated.
+Rating (INT) – The rating given by the user (between 1 and 5).
+rating_date (DATE) – The date when the rating was given.
+
+3. Relationships Between Entities
+The relationships between the entities are outlined below:
+
+-- Movies to Watch History:
+One-to-many: Each movie can appear in multiple watch history entries, but each watch history entry corresponds to only one movie.
+Foreign Key: movie_id in Watch History references movie_id in Movies.
+
+-- Users to Watch History:
+One-to-many: Each user can have multiple watch history entries, but each entry corresponds to only one user.
+Foreign Key: user_id in Watch History references user_id in Users.
+
+-- Movies to Ratings:
+One-to-many: Each movie can have multiple ratings, but each rating corresponds to one movie.
+Foreign Key: movie_id in Ratings references movie_id in Movies.
+
+-- Users to Ratings:
+One-to-many: Each user can give multiple ratings, but each rating corresponds to one user.
+Foreign Key: user_id in Ratings references user_id in Users.
+
+-- Users to Subscriptions:
+Many-to-one: Each user subscribes to one type of subscription, but each subscription can be associated with multiple users.
+Foreign Key: subscription_id in Users references subscription_id in Subscriptions.
+
+4. Normalization
+
+	1. Elimination of Redundancy: Data is stored in such a way that repetitive information is minimized. For example, user information and movie information are stored in separate tables, which avoids duplication of this data in multiple rows.
+
+	2. Elimination of Partial Dependency: All non-key attributes depend on the whole primary key. For example, the Ratings and Watch History tables have attributes dependent on their respective foreign keys.
+
+	3. Elimination of Transitive Dependency: Each non-key attribute in a table is functionally dependent only on the primary key and not on other non-key attributes. Which makes no indirect dependencies
+
+5. Assumptions and Design Considerations
+
+-- Password Storage: Passwords will be stored securely while being encrypted.
+
+-- Rating Validity: Ratings are limited to integers between 1 and 5.
+
+-- Subscription Management: The system does not track subscription renewals directly.
+
+-- Watch History Tracking: The Watch History table stores the amount of movies watched (duration_watched). This allows users to resume movies at the point they left off, if applicable.
+
+7. Conclusion
+In conclusion, the database provides a strong structured database for a movie streaming service. An could be modified for future updates and more.

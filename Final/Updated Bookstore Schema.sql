@@ -72,7 +72,7 @@ CREATE TABLE OrderItem (
     CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES Orders(order_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES Book(book_id)
+    CONSTRAINT fk2_book FOREIGN KEY (book_id) REFERENCES Book(book_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -83,7 +83,7 @@ CREATE TABLE Transactions (
     order_id INT NOT NULL,
     transaction_date DATETIME NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount >= 0),
-    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES Orders(order_id)
+    CONSTRAINT fk2_order FOREIGN KEY (order_id) REFERENCES Orders(order_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

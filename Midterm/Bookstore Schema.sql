@@ -20,7 +20,7 @@ CREATE TABLE Book (
     price DECIMAL(10, 2) NOT NULL CHECK (price >= 0)
 );
 
--- BookAuthor Table
+-- Junction Table: Book <--> Author
 CREATE TABLE BookAuthor (
     book_id INT NOT NULL,
     author_id INT NOT NULL,
@@ -43,14 +43,23 @@ CREATE TABLE Customer (
     address VARCHAR(255)
 );
 
+-- OrderStatus Table
+CREATE TABLE OrderStatus (
+    status_id INT AUTO_INCREMENT PRIMARY KEY,
+    status_name VARCHAR(50) NOT NULL UNIQUE
+);
+
 -- Orders Table
 CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT NOT NULL,
     order_date DATE NOT NULL,
-    status ENUM('Pending', 'Shipped', 'Delivered', 'Cancelled') DEFAULT 'Pending',
+    status_id INT NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
         ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES OrderStatus(status_id)
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 

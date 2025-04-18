@@ -4,7 +4,7 @@ USE bookstore;
 CREATE TABLE Book (
     book_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) UNIQUE NOT NULL,
-    genre VARCHAR(100),
+    genre ENUM('Fiction', 'Non-Fiction', 'Science Fiction', 'Fantasy', 'Biography', 'History', 'Children', 'Mystery') NOT NULL,
     publication_year INT,
     price DECIMAL(10, 2) NOT NULL
 );

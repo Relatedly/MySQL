@@ -19,7 +19,7 @@ CREATE TABLE Book (
     price DECIMAL(10, 2) NOT NULL
 );
 
--- Junction table: BookAuthor (many-to-many between Book and Author)
+-- BookAuthor table
 CREATE TABLE BookAuthor (
     book_id INT,
     author_id INT,

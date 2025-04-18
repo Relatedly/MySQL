@@ -20,7 +20,7 @@ CREATE PROCEDURE AddNewBook(
 )
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM books WHERE title = p_title AND author = p_author) THEN
-        INSERT INTO books (title, author, price, stock)
+        INSERT INTO book (title, author, price, stock)
         VALUES (p_title, p_author, p_price, p_stock);
     ELSE
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Book already exists';
@@ -44,7 +44,7 @@ BEGIN
 
     DECLARE cur CURSOR FOR 
         SELECT oi.book_id, oi.quantity 
-        FROM order_items oi
+        FROM orderitem oi
         WHERE oi.order_id = p_order_id;
 
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
@@ -58,8 +58,8 @@ BEGIN
 
     FETCH cur INTO book_id, quantity;
 
-    WHILE (SELECT COUNT(*) FROM order_items oi WHERE oi.order_id = p_order_id AND oi.book_id = book_id) > 0 DO
-        UPDATE books
+    WHILE (SELECT COUNT(*) FROM orderitem oi WHERE oi.order_id = p_order_id AND oi.book_id = book_id) > 0 DO
+        UPDATE book
         SET stock = stock - quantity
         WHERE book_id = book_id;
 
@@ -106,7 +106,7 @@ DETERMINISTIC
 BEGIN
     DECLARE total_cost DECIMAL(10,2);
     SELECT stock * price INTO total_cost
-    FROM books
+    FROM book
     WHERE book_id = p_book_id;
     RETURN total_cost;
 END //

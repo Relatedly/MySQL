@@ -25,10 +25,10 @@ CREATE TABLE BookAuthor (
     book_id INT NOT NULL,
     author_id INT NOT NULL,
     PRIMARY KEY (book_id, author_id),
-    FOREIGN KEY (book_id) REFERENCES Book(book_id)
+    CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES Book(book_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (author_id) REFERENCES Author(author_id)
+    CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES Author(author_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -53,12 +53,12 @@ CREATE TABLE OrderStatus (
 CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT NOT NULL,
-    order_date DATE NOT NULL,
+    order_date DATETIME NOT NULL,
     status_id INT NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+    CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (status_id) REFERENCES OrderStatus(status_id)
+    CONSTRAINT fk_status FOREIGN KEY (status_id) REFERENCES OrderStatus(status_id)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
@@ -69,10 +69,10 @@ CREATE TABLE OrderItem (
     order_id INT NOT NULL,
     book_id INT NOT NULL,
     quantity INT NOT NULL CHECK (quantity > 0),
-    FOREIGN KEY (order_id) REFERENCES Orders(order_id)
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES Orders(order_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (book_id) REFERENCES Book(book_id)
+    CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES Book(book_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -81,9 +81,9 @@ CREATE TABLE OrderItem (
 CREATE TABLE Transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
-    transaction_date DATE NOT NULL,
+    transaction_date DATETIME NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount >= 0),
-    FOREIGN KEY (order_id) REFERENCES Orders(order_id)
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES Orders(order_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

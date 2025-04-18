@@ -6,6 +6,9 @@ JOIN order_items oi ON b.book_id = oi.book_id
 GROUP BY b.book_id, b.title, b.author
 ORDER BY total_sold DESC;
 
+-- Explanation: This view aggregates sales data to identify top-selling books. 
+-- It simplifies reporting and can be used to generate bestseller lists or inform inventory decisions.
+
 
 -- Task 2: Create a Stored Procedure
 DELIMITER //
@@ -22,6 +25,9 @@ BEGIN
 END //
 
 DELIMITER ;
+
+-- Explanation: This stored procedure encapsulates the logic for adding a new book, ensuring consistent data entry 
+-- and reducing the risk of errors. It can be called from application code or other stored routines.
 
 
 -- Task 3: Outline the Use of Transactions
@@ -48,6 +54,9 @@ END //
 
 DELIMITER ;
 
+-- Explanation: In this procedure, a transaction ensures that all steps of processing an order are completed successfully. 
+-- If any step fails, the transaction is rolled back, preventing partial updates.​
+
 
 -- Task 4: Create a Trigger
 DELIMITER //
@@ -62,6 +71,9 @@ BEGIN
 END //
 
 DELIMITER ;
+
+-- Explanation: This trigger automatically adjusts the stock level of a book when a new order item is inserted, 
+-- ensuring real-time inventory accuracy without manual intervention.
 
 
 -- Task 5: User-Defined Function
@@ -80,6 +92,8 @@ END //
 
 DELIMITER ;
 
+-- Explanation: This function computes the total value of the inventory for a given book, 
+-- aiding in financial analysis and inventory management decisions.
 
 -- Task 6: Create an Event
 SET GLOBAL event_scheduler = ON;
@@ -95,5 +109,7 @@ BEGIN
     WHERE MONTH(order_date) = MONTH(NOW()) AND YEAR(order_date) = YEAR(NOW());
 END;
 
+-- Explanation: This event automates the generation of monthly sales reports, 
+-- ensuring timely and consistent reporting without manual effort.
 
 

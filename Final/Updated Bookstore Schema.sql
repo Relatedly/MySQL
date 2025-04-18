@@ -16,7 +16,7 @@ CREATE TABLE Book (
     book_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL UNIQUE,
     genre ENUM('Fiction', 'Non-Fiction', 'Science Fiction', 'Fantasy', 'Biography', 'History', 'Children', 'Mystery') NOT NULL,
-    publication_year INT CHECK (publication_year >= 1450 AND publication_year <= YEAR(CURDATE())),
+    publication_year INT CHECK (publication_year >= 1450),
     price DECIMAL(10, 2) NOT NULL CHECK (price >= 0)
 );
 
